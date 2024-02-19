@@ -11,8 +11,7 @@ public class Writer implements Runnable {
     public synchronized void run() {
         while (accessController.accessState != AccessType.WRITE) {
             try {
-                wait();
-                // System.out.println("Writer woke up");
+                wait(10);
             } catch (InterruptedException e) {
                 System.out.println("Thread interruption was handled");
             }

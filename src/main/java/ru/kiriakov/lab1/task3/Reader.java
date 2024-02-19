@@ -2,7 +2,6 @@ package ru.kiriakov.lab1.task3;
 
 public class Reader implements Runnable {
     private final AccessController accessController;
-
     public Reader(AccessController accessController) {
         this.accessController = accessController;
     }
@@ -11,8 +10,7 @@ public class Reader implements Runnable {
     public synchronized void run() {
         while (accessController.accessState != AccessType.READ) {
             try {
-                wait();
-                // System.out.println("Reader woke up");
+                wait(10);
             } catch (InterruptedException e) {
                 System.out.println("Thread interruption was handled");
             }
