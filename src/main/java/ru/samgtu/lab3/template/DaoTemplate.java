@@ -54,7 +54,7 @@ public abstract class DaoTemplate {
 
     public void edit(int id, Map<String, Object> map) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String settingPart = String.join(" = ?, ", map.keySet());
+            String settingPart = String.join(" = ?, ", map.keySet()) + " = ?";
             String sql = "UPDATE " + TABLE_NAME + " set " + settingPart + " where " + ID_COLUMN + "=?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
 
@@ -119,7 +119,7 @@ public abstract class DaoTemplate {
 
     public void findBy(Object param) {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "select * from " + TABLE_NAME + " where " + findBy + " = " + param;
+            String sql = "select * from " + TABLE_NAME + " where " + findBy + " like '%" + param + "%'";
             show(connection, sql);
         } catch (SQLException e) {
             System.out.println("Ошибка при выполнении SQL: " + e.getMessage());

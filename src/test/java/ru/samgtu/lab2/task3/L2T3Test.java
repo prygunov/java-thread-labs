@@ -6,7 +6,7 @@ public class L2T3Test {
 
     @Test
     public void l2t3test() {
-        ThreadPrinter printer = new ThreadPrinter("()");
+        ThreadPrinter printer = new ThreadPrinter("Val");
         ThreadReader reader = new ThreadReader(printer);
         reader.start();
         printer.start();

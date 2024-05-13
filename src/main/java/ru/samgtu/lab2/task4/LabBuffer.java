@@ -8,20 +8,20 @@ public class LabBuffer {
 
     public void putData(int data){
         if(buffer.size() >= maxSize) {
-            System.out.println("Тарелок не хватает");
+            System.out.println("Еды нет");
             return;
         }
 
         buffer.add(data);
-        System.out.println("Сделал сэндвич, всего " + buffer.size());
+        System.out.println("Приготовил, всего еды " + buffer.size());
     }
 
     public void pullData(){
         if(buffer.isEmpty()){
-            System.out.println("Отбой, сэндвичи кончились");
+            System.out.println("Отбой, еда кончилась");
             return;
         }
         buffer.removeLast();
-        System.out.println("Взял сэндвич, всего " + buffer.size());
+        System.out.println("Скушал, всего еды " + buffer.size());
     }
 }

@@ -29,7 +29,7 @@ public class UnmarshalEmployeesXMLWithJAXB {
                 System.out.println();
             }
 
-            System.out.println("Макс. зарплата: " + company.employees.stream().mapToDouble((u) -> u.salary).max());
+            System.out.println("Макс. зарплата: " + company.employees.stream().mapToDouble((u) -> u.salary).max().getAsDouble());
             System.out.println("Макс. возраст: " + company.employees.stream().mapToDouble((u) -> u.age).max().getAsDouble());
             System.out.println("Средний возраст: " + company.employees.stream().mapToDouble((u) -> u.age).average().getAsDouble());
             System.out.println("Мин. возраст: " + company.employees.stream().mapToDouble((u) -> u.age).min().getAsDouble());

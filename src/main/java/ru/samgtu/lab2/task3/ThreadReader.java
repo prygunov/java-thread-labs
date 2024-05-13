@@ -14,7 +14,7 @@ public class ThreadReader extends Thread {
 
     @Override
     public synchronized void run() {
-        var path = Paths.get(System.getProperty("user.dir"), "/src/main/java/ru/kiriakov/lab2/task3/ThreadPrinter.java").toFile();
+        var path = Paths.get(System.getProperty("user.dir"), "/resources/sample.xml").toFile();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             synchronized (printer.queue) {
                 String line;
