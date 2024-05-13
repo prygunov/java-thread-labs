@@ -10,26 +10,132 @@
   <name>threadlabs</name>
   <url>http://maven.apache.org</url>
 
+
+
   <properties>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- maven plugins -->
+    <jaxb2-maven-plugin.version>3.1.0</jaxb2-maven-plugin.version>
+    <lifecycle-mapping-plugin.version>1.0.0</lifecycle-mapping-plugin.version>
+    <jaxb-runtime.version>4.0.0</jaxb-runtime.version>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.instancio</groupId>
+      <artifactId>instancio-core</artifactId>
+      <version>4.5.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.7.3</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
+    <!-- utils -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.16.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.14.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>${jaxb-runtime.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+
   </dependencies>
+
   <build>
+    <finalName>jaxb</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>${lifecycle-mapping-plugin.version}</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxb2-maven-plugin</artifactId>
+                    <versionRange>[${jaxb2-maven-plugin.version},)</versionRange>
+                    <goals>
+                      <goal>schemagen</goal>
+                      <goal>xjc</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
+      <!-- xjc -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <version>${jaxb2-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>xjc</id>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
-          <source>19</source>
-          <target>19</target>
+          <xjbSources>
+            <xjbSource>src/main/resources/global.xjb</xjbSource>
+          </xjbSources>
+          <sources>
+            <source>src/main/resources/medicine.xsd</source>
+          </sources>
+          <outputDirectory>${basedir}/src/main/java</outputDirectory>
+          <clearOutputDir>false</clearOutputDir>
+          <noGeneratedHeaderComments>true</noGeneratedHeaderComments>
+          <extension>true</extension>
+          <generateEpisode>false</generateEpisode>
         </configuration>
       </plugin>
     </plugins>

@@ -1,0 +1,14 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=samgtu
+      - POSTGRES_USER=samgtu
+      - POSTGRES_PASSWORD=samgtu
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d:ro
